@@ -6,8 +6,10 @@ import Msg from './Msg/Msg'
 function App() {
   return (
     <div className="app">
-      <Sidebar />
-      <Msg />
+      <div className='app_body'>
+        <Sidebar />
+        <Msg />
+      </div>
     </div>
   );
 }
