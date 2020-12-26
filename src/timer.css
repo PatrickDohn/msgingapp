@@ -1,0 +1,19 @@
+.timer {
+    color: white;
+    height: 15%;
+    width: 100vw;
+    font-size: 70px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+
+}
+
+.timer > h3 {
+    font-size: 20px;
+
+}
+
+.timer-container {
+    display: flex;
+}

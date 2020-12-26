@@ -1,3 +1,4 @@
+
 const firebaseConfig = {
     apiKey: "AIzaSyC8hs5dsaW6gG_9i5EZ8JU7KQaEWTkZ6lc",
     authDomain: "msgingapp-b23ed.firebaseapp.com",

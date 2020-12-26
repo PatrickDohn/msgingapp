@@ -1,58 +1,46 @@
-import { Avatar, IconButton } from '@material-ui/core'
-import React from 'react'
+import React, { useState } from 'react'
 import './msg.css'
-import MoreVertIcon from '@material-ui/icons/MoreVert';
-import DonutLargeIcon from '@material-ui/icons/DonutLarge';
-import ChatBubbleOutlineIcon from '@material-ui/icons/ChatBubbleOutline';
-import EmojiEmotionsIcon from '@material-ui/icons/EmojiEmotions';
-import MicIcon from '@material-ui/icons/Mic';
+import axios from 'axios'
+import Timer from '../Timer'
 
-const Msg = () => {
+
+const Msg = ({ messages }) => {
+    const [input, setInput] = useState("")
+    const [chosenEmoji, setChosenEmoji] = useState(null);
+
+    const onEmojiClick = (event, emojiObject) => {
+        setChosenEmoji(emojiObject);
+      };
+
+    const sendMessage = async (e) => {
+        e.preventDefault()
+
+
+        await axios.post('http://localhost:9000/messages/new', {
+            message: input,
+            name: "demo",
+            timestamp: "just now",
+            received: false
+    })
+
+    setInput('')
+
+}
     return (
         <div className="msg">
-            <div className="chat_header">
-                <Avatar />
-                <div className="chat__headerInfo">
-                    <h3>Room name</h3>
-                    <p>Last seen at...</p>
-                </div>
-
-                <div className="chat__headerRight">
-                    <IconButton>
-                        <DonutLargeIcon />
-                    </IconButton>
-                    <IconButton>
-                        <ChatBubbleOutlineIcon />
-                    </IconButton>
-                    <IconButton>
-                        <MoreVertIcon/>
-                    </IconButton>
-                </div>
-            </div>
-
+            <Timer />
             <div className="chat__body">
-                <p className="chat__message">
-                    <span className="chat__name">Patrick</span>
-                    This is a message
-                    <span className="chat__timestamp">
-                        {new Date().toUTCString()}
-                    </span>
+                {messages.map((message) => (
+                <p className={`chat__message ${message.received && "chat__reciever"}`}>
+                    {message.message}
                 </p>
-                <p className="chat__message chat__reciever">
-                    <span className="chat__name">Patrick</span>
-                    This is a message
-                    <span className="chat__timestamp">
-                        {new Date().toUTCString()}
-                    </span>
-                </p>
+                ))}
             </div>
             <div className="chat__footer">
-                <EmojiEmotionsIcon />
                 <form>
-                    <input placeholder="type a message" type="text" />
-                    <button type="submit"> Send</button>
+                    <input value={input} onChange={e => setInput(e.target.value)} placeholder="Tell her how you feel" type="text" />
+                    <button onClick={sendMessage} type="submit"> Send</button>
                 </form>
-                <MicIcon />
             </div>
         </div>
     )
